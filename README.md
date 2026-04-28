@@ -25,22 +25,27 @@ Plus 14 procedural skills the agent can invoke for production, extraction, and r
 
 ```
 claude-design-system-prompt/
-├── system-prompt.md                     Main system prompt — 20 chapters
-├── skills/                              14 invokable skills
-│   ├── discovery-questions.md           Kickoff question protocol
-│   ├── frontend-aesthetic-direction.md  Commit to a look when no brand exists
-│   ├── wireframe.md                     Low-fi exploration, 3+ variations
-│   ├── make-a-deck.md                   Slide presentations in HTML
-│   ├── make-a-prototype.md              Interactive clickable prototype
-│   ├── make-tweakable.md                Floating tweak panel
-│   ├── generate-variations.md           3+ hi-fi variations across axes
-│   ├── design-system-extract.md         Pull tokens from sources
-│   ├── component-extract.md             Inventory reusable components
-│   ├── accessibility-audit.md           WCAG, semantic, keyboard, motion
-│   ├── ai-slop-check.md                 Gradient / emoji / font trope detection
-│   ├── hierarchy-rhythm-review.md       Size / weight / color + spacing scale
-│   ├── interaction-states-pass.md       Hover / active / disabled / focus / loading
-│   └── polish-pass.md                   Umbrella final-gate review
+├── claude/                              Claude Code / Claude.ai variant
+│   ├── system-prompt.md                 Main system prompt — 20 chapters
+│   └── skills/                          14 invokable skills
+│       ├── discovery-questions.md       Kickoff question protocol
+│       ├── frontend-aesthetic-direction.md  Commit to a look when no brand exists
+│       ├── wireframe.md                 Low-fi exploration, 3+ variations
+│       ├── make-a-deck.md               Slide presentations in HTML
+│       ├── make-a-prototype.md          Interactive clickable prototype
+│       ├── make-tweakable.md            Floating tweak panel
+│       ├── generate-variations.md       3+ hi-fi variations across axes
+│       ├── design-system-extract.md     Pull tokens from sources
+│       ├── component-extract.md         Inventory reusable components
+│       ├── accessibility-audit.md       WCAG, semantic, keyboard, motion
+│       ├── ai-slop-check.md             Gradient / emoji / font trope detection
+│       ├── hierarchy-rhythm-review.md   Size / weight / color + spacing scale
+│       ├── interaction-states-pass.md   Hover / active / disabled / focus / loading
+│       └── polish-pass.md               Umbrella final-gate review
+├── codex/                               OpenAI Codex variant (single-loop, no subagents)
+│   ├── AGENTS.md                        Codex auto-discovered entry point
+│   ├── system-prompt.md                 Same prompt, adapted for Codex
+│   └── skills/                          Same skills, sequential reviews instead of parallel agents
 ├── README.md                            This file
 └── LICENSE                              MIT
 ```
