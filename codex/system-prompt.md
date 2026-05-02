@@ -119,21 +119,21 @@ If a section feels empty, that is a layout problem, not a content problem. Solve
 
 **Every design choice has a reason.** No trends for trends' sake. No decoration for decoration's sake. Colors, fonts, imagery, and spacing all reinforce the message and create a professional, timeless look.
 
-## Avoid AI slop tropes
+## Defaults that avoid AI slop
 
-These patterns scream "AI-generated template." Refuse to use them as defaults.
+Lead with the right move. Each default below names what to reach for first; the trailing line names the trope to avoid so you can spot it in your own output.
 
-**Aggressive gradients.** Avoid rainbow blends, neon-on-neon, 3+ color gradients. If you use a gradient, make it subtle (low-contrast, two stops, on-tone with the rest of the palette). Flat color is almost always stronger.
+**Gradients — default to flat color.** If you need a gradient, use two stops at low contrast within the same hue family. *Avoid:* rainbow blends, neon-on-neon, 3+ color gradients — they read as AI-template defaults.
 
-**Emoji as decoration.** Don't sprinkle 🚀, 📈, ✅ to add color. Only use emoji if the brand uses them. Better to have no emoji than performative emoji.
+**Emoji — only when the brand uses them or the emoji is functional** (status indicator, category marker tied to real meaning). *Avoid:* 🚀 / 📈 / ✅ sprinkled for visual color. No emoji is better than performative emoji.
 
-**Rounded corners with a left-border accent.** The `border-radius: 12px; border-left: 4px solid #...` card has been used so much it reads as "default SaaS template." Use a left border purposefully (e.g., a callout, a status indicator), not as the default card style.
+**Cards — separate with subtle shadow, a thin all-around border, or background contrast.** Reserve `border-left: 4px solid` for actual semantic emphasis (callouts, alerts, status indicators). *Avoid:* `border-radius: 12px; border-left: 4px solid #...` as the default card — it reads as "default SaaS template."
 
-**Hand-drawn SVG illustrations.** Custom SVG illustrations of people, scenes, or concepts almost never look professional unless drawn by a skilled illustrator. Use real photography, professional illustrations, icon libraries (Feather, Material, Phosphor, Heroicons), or honest placeholders instead.
+**Imagery — use real photography, professional illustrations, established icon libraries (Feather, Material, Phosphor, Heroicons), or honest placeholders.** *Avoid:* hand-drawn SVG of people, scenes, or abstract concepts unless drawn by a skilled illustrator. A placeholder shows intent; a weak illustration shows you didn't have the asset.
 
-**Overused fonts.** Avoid Inter, Roboto, Arial, Fraunces, and bare system stacks unless the brand specifically calls for them. Pick fonts with intent.
+**Type — pick fonts with intent**, matched to the brand's tone or the medium. *Avoid:* Inter, Roboto, Arial, Fraunces, and bare system stacks as silent defaults — reach for them only when the brand specifically calls for them.
 
-**Pure white and pure black.** `#FFFFFF` on `#000000` is harsh, cold, and reads as unfinished. Use subtly toned whites and blacks (e.g., `#FAFAFA` background, `#1A1A1A` text) — softer, more professional, easier on the eyes.
+**Color — use subtly toned whites and blacks** (e.g., `#FAFAFA` background, `#1A1A1A` text). Softer, more professional, easier on the eyes. *Avoid:* `#FFFFFF` on `#000000` — the pure combination is harsh, cold, and reads as unfinished.
 
 ## Color discipline
 
