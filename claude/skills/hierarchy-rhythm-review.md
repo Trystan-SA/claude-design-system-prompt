@@ -1,21 +1,10 @@
 # Hierarchy and Rhythm Review
 
-Review the current design for visual hierarchy and rhythm — the two qualities that most distinguish "intentional" from "AI-generated." Fix issues found.
-
-**Hierarchy guides the eye:** what gets looked at first, second, third.
-**Rhythm makes the design feel intentional:** repetition with strategic variation.
-
-When hierarchy and rhythm are right, the design feels effortless to scan. When they're wrong, even well-intentioned content feels confusing or boring.
+Review the current design for visual hierarchy and rhythm — the two qualities that most distinguish "intentional" from "AI-generated" — and fix issues found. **Hierarchy guides the eye** (what gets looked at first, second, third); **rhythm makes the design feel intentional** (repetition with strategic variation). When they're right, the design feels effortless to scan.
 
 ## Phase 1: Identify the surface
 
-Find what to review. In order:
-
-1. The HTML/CSS file the user just edited or asked about.
-2. The most recently modified design file in the session.
-3. If unclear, ask.
-
-Read the file and the styles it references. Note the medium (slide / page / mobile / dashboard) — hierarchy and rhythm rules vary by context.
+Review the HTML/CSS file the user just edited or asked about; otherwise the most recently modified design file; if unclear, ask. Read the file and its referenced styles, and note the medium (slide / page / mobile / dashboard) — the rules vary by context.
 
 ## Phase 2: Launch two review agents in parallel
 
@@ -27,57 +16,35 @@ Instruct both agents explicitly: report every issue found, including uncertain a
 
 For every screen, slide, or major section:
 
-1. **Identify the primary, secondary, and tertiary elements.** What is the user supposed to look at first? Second? Third? If you can't tell, the hierarchy is broken.
-
-2. **Check size differentiation.** Headings should be visibly larger than body text. The primary CTA should be larger than secondary actions. Flag cases where similar content is at very different sizes (inconsistent), and cases where different-importance content is at similar sizes (flat hierarchy).
-
-3. **Check color hierarchy.** Primary actions should be in a saturated brand color. Secondary actions in neutral. Disabled or de-emphasized content in light gray. Flag cases where everything is the same color (no signal) or where unimportant elements are in the brightest color (wrong signal).
-
-4. **Check weight hierarchy.** Headlines bold, body regular, captions regular-and-light. Flag everything-bold (nothing stands out) or everything-regular (no emphasis).
-
-5. **Check position.** In left-to-right languages, eyes start at top-left. The most important content (logo, primary headline, primary CTA) should be in the prime real estate. Flag layouts where the primary element is buried in the bottom-right.
-
-6. **Check density signals.** Loose spacing around important elements signals "pay attention." Tight spacing signals "supporting." Flag cases where the most important content is crammed and unimportant content has lots of breathing room — that's reversed.
-
-7. **Verify "the 5-second test."** A first-time user should understand what to look at and what to do within 5 seconds. If you can't, the eye doesn't have a clear path through the design.
+1. **Primary / secondary / tertiary.** What should be looked at first, second, third? If you can't tell, the hierarchy is broken.
+2. **Size.** Headings visibly larger than body; primary CTA larger than secondary actions. Flag similar content at very different sizes (inconsistent) and different-importance content at similar sizes (flat).
+3. **Color.** Primary actions in saturated brand color, secondary in neutral, de-emphasized in light gray. Flag everything-same-color (no signal) and unimportant-elements-brightest (wrong signal).
+4. **Weight.** Headlines bold, body regular, captions light. Flag everything-bold and everything-regular.
+5. **Position.** Eyes start top-left (in LTR); the most important content belongs in prime real estate. Flag primary elements buried bottom-right.
+6. **Density.** Loose spacing signals "pay attention," tight signals "supporting." Flag important content crammed while filler breathes — that's reversed.
+7. **The 5-second test.** A first-time user should know what to look at and what to do within 5 seconds.
 
 ### Agent 2: Rhythm review
 
 For the document as a whole:
 
-1. **Check the spacing scale.** All padding, margin, and gap values should snap to a consistent scale (typically multiples of 4px or 8px). Flag every random value (`padding: 7px`, `margin: 18px`, `gap: 13px`). List the spacing scale that's been *implicitly* used and identify outliers.
-
-2. **Check the type scale.** Every font size should come from a defined scale. Flag arbitrary sizes (`font-size: 17px` or `font-size: 23px` when the rest of the design uses 16/20/24).
-
-3. **Check repetition.** Sections that should look like each other (cards in a grid, list items, feature blocks) should share padding, gap, font sizes, and structure. Flag near-duplicates that are subtly different — either they should be identical or they should be deliberately different.
-
-4. **Check strategic variation.** A long page or deck should break its pattern occasionally — a different background color, a wider section, a centered CTA — to create rhythm. Flag pages that are completely uniform (monotonous) and pages that vary every section (chaotic).
-
-5. **Check color palette discipline.** The design should use 3–5 colors (plus their tints/shades) across all elements. Flag cases where 8+ distinct colors appear, or where slightly different blues/grays are used in different places.
-
-6. **Check section structure.** Sections should be visually distinguishable (background change, divider, padding shift) but follow a consistent pattern. Flag sections with no visual separation (where content blurs together) and sections with too many separation styles (no rhythm).
-
-7. **Check alignment.** Elements should align to a grid. Flag elements that are off by a few pixels in a way that suggests inconsistent margins rather than intentional offset.
+1. **Spacing scale.** All padding/margin/gap values snap to a consistent scale (multiples of 4px or 8px). List the implicitly-used scale and flag outliers (`padding: 7px`, `gap: 13px`).
+2. **Type scale.** Flag arbitrary sizes (`17px`, `23px` in a 16/20/24 design).
+3. **Repetition.** Cards in a grid, list items, feature blocks share padding, gap, sizes, structure. Flag near-duplicates that are subtly different — identical or deliberately different, nothing in between.
+4. **Strategic variation.** A long page or deck breaks its pattern occasionally (background shift, wider section, centered CTA). Flag total uniformity (monotonous) and every-section-different (chaotic).
+5. **Palette discipline.** 3–5 colors plus tints/shades. Flag 8+ distinct colors, or slightly different blues/grays in different places.
+6. **Section structure.** Sections visually distinguishable (background change, divider, padding shift) but consistently so. Flag no separation and too many separation styles.
+7. **Alignment.** Flag elements off-grid by a few pixels — inconsistent margins rather than intentional offset.
 
 ## Phase 3: Aggregate and fix
 
-Wait for both agents. Aggregate findings.
+Wait for both agents, aggregate findings, then fix directly:
 
-For each issue:
+- Random spacing / font sizes → snap to the file's scale (define one — 4px or 8px multiples — if missing)
+- Flat hierarchy → introduce contrast (bigger headlines, more prominent primary CTA, consistently neutral body)
+- Reversed hierarchy → swap the signals (mute the loud unimportant element, reposition the buried primary)
+- Monotony → introduce one strategic break; chaos → consolidate to the strongest pattern
 
-- **Random spacing → snap to scale.** If the file already has a scale, snap to the nearest value. If it doesn't, define one (typically 4px or 8px multiples) and update all spacing.
-- **Random font sizes → snap to type scale.** Same approach.
-- **Flat hierarchy → introduce contrast.** Make headlines bigger, primary CTAs more prominent, body text consistently neutral.
-- **Reversed hierarchy → swap signals.** If the unimportant element is brightest, mute it. If the important element is buried, reposition.
-- **Monotony → introduce a strategic break.** Change the background of one section, increase the padding of the CTA section, vary the layout of one card.
-- **Chaos → consolidate.** Pick the strongest pattern and make others match it.
+For ambiguous cases, lean toward the more aggressive hierarchy — too-strong is easier to dial back than too-weak to dial up.
 
-Apply fixes directly. For ambiguous cases, lean toward the more aggressive hierarchy — a too-strong hierarchy is easier to dial back than a too-weak one to dial up.
-
-## Phase 4: Summarize
-
-Report:
-- Hierarchy issues found and fixed
-- Rhythm issues found and fixed
-- Any judgment calls that the user should review (e.g., "I made the CTA significantly larger — adjust if too aggressive")
-- Open recommendations (e.g., "Consider committing to a strict 8px spacing scale; current file has both 4px and 8px increments mixed")
+Summarize: issues found and fixed per category, judgment calls the user should review, open recommendations.

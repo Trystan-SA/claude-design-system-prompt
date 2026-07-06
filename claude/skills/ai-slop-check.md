@@ -1,130 +1,71 @@
 # AI Slop Check: Detect and Fix Generic AI Aesthetics
 
-Review the current design for the visual tropes that signal "AI-generated template." Fix any found.
+Review the current design for the visual tropes that signal "AI-generated template," and fix any found. These patterns read as default, not intentional — a design that looks like a hundred other AI outputs fails to look like the user's design.
 
-These patterns are rejected because they read as default, not intentional. A design that looks like a hundred other AI outputs is a design that fails to look like the user's design.
+Each rule is **positive-first**: the default to reach for, then the patterns to detect and replace. At write-time, bias toward the default; at review-time, scan for the detection patterns.
 
-Each rule below is **positive-first**: lead with the default to reach for, then list the patterns to detect and replace. The order matters — at write-time you should be biased toward the default; at review-time, scan for the detection patterns.
+## Phase 1: Identify the surface
 
-## Phase 1: Identify the surface to review
+Review the HTML/CSS file the user just edited or asked about; otherwise files modified this session; if unclear, ask. Read the file and skim referenced CSS, tokens, and component files so you can resolve actual values.
 
-Find what to review. In order:
+## Phase 2: Single-pass review
 
-1. The HTML/CSS file the user just edited or asked about.
-2. Files modified in the current session.
-3. If unclear, ask the user which file or component.
-
-Read the file. Skim referenced CSS, tokens, and component files so you can resolve actual values.
-
-## Phase 2: Single-pass review for AI tropes
-
-Walk through the design and apply each rule below. Single agent — these patterns are obvious enough that parallel dispatch is overkill.
-
-Report every detection, including uncertain or low-severity ones, with a confidence and severity estimate. Your job at this stage is coverage — filtering happens when you fix (Phase 3) or when the findings are aggregated by `polish-pass`.
+Apply each rule below in a single pass — these patterns are obvious enough that parallel dispatch is overkill. Report every detection, including uncertain or low-severity ones, with a confidence and severity estimate. Coverage is the job at this stage; filtering happens in Phase 3 or in `polish-pass` aggregation.
 
 ### 1. Gradients — flat or subtle, on-tone
 
-**Default:** flat color from the design system, or a subtle on-tone gradient (two stops, low contrast, same hue family). Flat is almost always stronger.
+**Default:** flat color from the design system, or a subtle on-tone two-stop gradient. Flat is almost always stronger.
 
-**Detect & replace:**
-- Rainbow / 3+ color gradients (`linear-gradient(135deg, #FF00FF, #00FFFF, #FFFF00)` and similar)
-- Saturated purple-to-pink, orange-to-pink, or other "trendy" two-color blends used for hero backgrounds, buttons, or large surfaces
-- Gradient overlays on imagery that don't improve legibility or hierarchy
+**Detect & replace:** rainbow / 3+ color gradients; saturated purple-to-pink, orange-to-pink, or other "trendy" blends on heroes, buttons, or large surfaces; gradient overlays on imagery that don't improve legibility or hierarchy.
 
 ### 2. Emoji — functional or brand-driven only
 
-**Default:** no emoji. Reach for one only if the brand explicitly uses emoji in existing materials, the emoji is functional (a status indicator, a category marker tied to real meaning), or the user asked for them.
+**Default:** no emoji, unless the brand uses them in existing materials, the emoji is functional (status indicator, category marker), or the user asked.
 
-**Detect & remove:**
-- Emoji prepending headlines, button text, or list items where the brand doesn't use them (`🚀 Get Started`, `✅ Track progress`)
-- Repeated emoji used as visual filler (`🎉🎉🎉`)
-- Emoji as bullet markers when they don't add meaning
+**Detect & remove:** emoji prepending headlines, buttons, or list items (`🚀 Get Started`); repeated emoji filler (`🎉🎉🎉`); emoji bullets without meaning. If the layout relied on the emoji's visual weight, use a real icon (Feather, Material, Phosphor, Heroicons) or better typographic hierarchy.
 
-If the layout relied on the emoji for visual weight, replace with a real icon from an established system (Feather, Material, Phosphor, Heroicons) or improve the typographic hierarchy.
+### 3. Cards — shadow, thin border, or background separation
 
-### 3. Cards — separate with shadow, thin border, or background
+**Default:** subtle shadow, thin all-around border, or background separation. Reserve `border-left: 4px solid` for semantic emphasis (callouts, alerts, status).
 
-**Default:** distinguish cards with a subtle shadow, a thin all-around border, or pure background separation. Reserve `border-left: 4px solid` for actual semantic emphasis (callouts, alerts, status indicators).
-
-**Detect & replace** the exact pattern:
-
-```css
-.card {
-  border-radius: 12px;
-  border-left: 4px solid #...;
-}
-```
-
-…used as the *default* card or container style across the design. This combination is so overused it reads as "default SaaS template."
-
-Keep the left border only if it's purposeful (a callout, an alert, a status indicator) and used for that meaning specifically, or it's coming from an existing design system you're matching.
+**Detect & replace:** `border-radius: 12px` + `border-left: 4px solid` used as the *default* card style — this combination reads as "default SaaS template." Keep the left border only when it carries that semantic meaning, or when it comes from an existing design system you're matching.
 
 ### 4. Imagery — real, licensed, or honest placeholder
 
-**Default, in order of preference:**
-- Real photography (Unsplash, brand assets)
-- Professional illustration (icon library or commissioned)
-- Honest placeholder — striped background with monospace label like `product shot (1200×800)`
+**Default, in order:** real photography (Unsplash, brand assets); professional illustration; honest placeholder — striped background with monospace label like `product shot (1200×800)`. A placeholder beats a bad illustration: it signals "asset needed" without pretending to be final.
 
-A placeholder is better than a bad illustration. It signals "asset needed" without pretending to be the real thing.
-
-**Detect & replace:**
-- Custom SVG illustrations of people, scenes, abstract concepts that aren't drawn by a skilled illustrator
-- "AI-style" character illustrations (giant heads, flat-color blobs, identical posing)
-- Decorative SVG that's clearly placeholder-quality but presented as final
+**Detect & replace:** custom SVG illustrations of people, scenes, or concepts not drawn by a skilled illustrator; "AI-style" character art (giant heads, flat-color blobs, identical posing); placeholder-quality decoration presented as final.
 
 ### 5. Type — fonts chosen with intent
 
-**Default:** pick a font with intent, matched to the brand's tone or the medium. If you don't have a brand to draw from, suggest 2–3 alternatives that match the design's tone (geometric, humanist, modern, classical) and let the user pick.
+**Default:** a font matched to the brand's tone or the medium. With no brand, suggest 2–3 alternatives matching the design's tone (geometric, humanist, modern, classical) and let the user pick.
 
-**Detect & question** bare use of:
-- Inter
-- Roboto
-- Arial
-- Fraunces
-- Bare system stacks (`-apple-system, sans-serif` with no actual font choice)
-
-…used as silent defaults without a brand reason. Keep them only if the brand specifies them, the user asked for them, or they're appropriate for the medium and the user has confirmed. Do not silently swap one generic for another.
+**Detect & question** bare use of Inter, Roboto, Arial, Fraunces, or bare system stacks as silent defaults. Keep them only if the brand specifies them or the user confirmed. Don't silently swap one generic for another.
 
 ### 6. Color — subtly toned whites and blacks
 
-**Default:** use whites and blacks subtly toned to match the palette. Examples:
-- Warm: `#FFFAF0` background, `#2D2118` text
-- Cool: `#F5F7FA` background, `#1F2937` text
-- Neutral: `#FAFAFA` background, `#1A1A1A` text
+**Default:** whites and blacks toned to the palette — warm `#FFFAF0`/`#2D2118`, cool `#F5F7FA`/`#1F2937`, neutral `#FAFAFA`/`#1A1A1A`.
 
-**Detect & replace:** exact `#FFFFFF` background paired with exact `#000000` text. The combination is harsh, cold, and reads as unfinished.
+**Detect & replace:** exact `#FFFFFF` background with exact `#000000` text — harsh, cold, and unfinished.
 
 ### 7. Color values — trace to a token or harmonious palette
 
-**Default:** every color value should trace to a design token, brand variable, or `oklch()`-derived harmonious palette. If creating a palette from scratch, use `oklch()` to keep lightness and chroma consistent across hues.
+**Default:** every color traces to a design token, brand variable, or `oklch()`-derived palette (use `oklch()` to keep lightness and chroma consistent when building from scratch).
 
-**Detect & consolidate:** color values that don't trace anywhere. Five different blues across the file (`#0066CC`, `#0077DD`, `#3498DB`, `#3B82F6`, `#5B8DEF`) is a smell — colors were invented inline.
+**Detect & consolidate:** colors that don't trace anywhere — five slightly different blues across one file means colors were invented inline.
 
 ### 8. Spacing — snap to a 4px or 8px scale
 
-**Default:** define spacing tokens (`--space-xs: 4px` through `--space-2xl: 64px`) and use them. Multiples of 4 or 8 feel intentional.
+**Default:** spacing tokens (`--space-xs: 4px` through `--space-2xl: 64px`); multiples of 4 or 8 feel intentional.
 
-**Detect & replace:** off-scale values like `padding: 7px 15px`, `margin: 18px`, `gap: 13px`. They feel chaotic.
+**Detect & replace:** off-scale values (`padding: 7px 15px`, `margin: 18px`, `gap: 13px`) — they feel chaotic.
 
 ### 9. The editorial-warm house style — deliberate or absent
 
 **Default:** an aesthetic direction chosen for the brief (see `frontend-aesthetic-direction`). The warm-editorial look is legitimate for editorial, hospitality, and portfolio work — when it traces to a brand or an explicitly committed direction.
 
-**Detect & question** the combination, absent a brand reason:
-
-- Cream / warm off-white page backgrounds in the `#F4F1EA` family
-- Serif display faces as silent defaults (Georgia, Playfair Display, Fraunces)
-- Italic word-accents in headlines
-- Terracotta / amber accent palette
-
-Any one of these can be a deliberate choice. All of them together — especially on a dashboard, dev tool, fintech, healthcare, or enterprise surface — is the default-template look, today's equivalent of the purple gradient. Replace with the committed direction, or flag for the user if no direction exists.
+**Detect & question** the combination, absent a brand reason: cream / warm off-white backgrounds in the `#F4F1EA` family; serif display faces as silent defaults (Georgia, Playfair Display, Fraunces); italic word-accents in headlines; terracotta / amber accents. Any one can be deliberate. All together — especially on a dashboard, dev tool, fintech, healthcare, or enterprise surface — is the default-template look, today's equivalent of the purple gradient. Replace with the committed direction, or flag for the user if none exists.
 
 ## Phase 3: Fix and summarize
 
-Apply fixes directly. For decisions where multiple options are reasonable (e.g., which non-Inter font to use), pick the most defensible default and note the choice in your summary so the user can override.
-
-When done, summarize:
-- Tropes found, by category
-- Fixes applied
-- Open questions for the user (font choice, asset replacement, etc.)
+Apply fixes directly. Where multiple options are reasonable (e.g., which non-Inter font), pick the most defensible default and note it so the user can override. Summarize: tropes found by category, fixes applied, open questions for the user.

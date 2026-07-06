@@ -1,95 +1,48 @@
 # Wireframe: Explore Many Ideas Quickly
 
-Produce low-fidelity wireframes or storyboards to explore a flow, layout, or idea before committing to hi-fi design. Use this when the user wants to "explore options," "sketch something out," "see a few directions," or when the design problem is open enough that hi-fi work would be wasted at this stage.
-
-**Wireframes are disposable.** They exist to test ideas, not to be polished. Their value is in the breadth of options, not the fidelity of any one.
+Produce low-fidelity wireframes or storyboards to explore a flow, layout, or idea before committing to hi-fi design. Use this when the user wants to "explore options," "sketch something out," or "see a few directions," or when the problem is open enough that hi-fi work would be wasted. **Wireframes are disposable** — their value is breadth of options, not the fidelity of any one.
 
 ## Phase 1: Understand the goal
 
-Confirm:
+Confirm: **what's being explored** (a screen, a flow, a navigation pattern, an information hierarchy, an interaction model); **the user goal** on this screen or flow; **constraints** (mobile or desktop, existing context or greenfield, non-negotiable elements); **number of variations** (3 minimum, 5–6 ceiling per round); **axis of variation** (layout? density? step count? CTA placement?).
 
-- **What's being explored.** A single screen, a multi-screen flow, a navigation pattern, an information hierarchy, an interaction model?
-- **The user goal.** What is the imagined user trying to accomplish on this screen / flow?
-- **Constraints.** Mobile or desktop? Existing context or greenfield? Any non-negotiable elements (logo position, mandatory legal copy, fixed brand color)?
-- **Number of variations.** 3 minimum. 5–6 is a healthy ceiling for one round.
-- **Axis of variation.** What dimension should the variations differ on? (Layout? Information density? Step count in the flow? Where the primary CTA lives? Single-page vs multi-page?)
-
-If the user just says "wireframe a sign-up flow" without specifying, propose 2–3 axes (e.g., "single-page form vs multi-step wizard vs progressive disclosure") and ask which they want explored.
+If the user just says "wireframe a sign-up flow," propose 2–3 axes (e.g., "single-page form vs multi-step wizard vs progressive disclosure") and ask which to explore.
 
 ## Phase 2: Establish wireframe conventions
 
-Wireframes have a visual language. Stick to it so the user reads the wireframes as wireframes — not as broken hi-fi.
+Stick to the wireframe visual language so the user reads them as wireframes, not broken hi-fi:
 
-Conventions:
+- **Greyscale only** — black, white, 2–3 grays; no brand color
+- **System sans-serif** — no type personality; the user shouldn't form font opinions yet
+- **Boxes for content areas**, labeled ("headline", "image", "feature card")
+- **Striped placeholders for imagery** with monospace labels (`product shot 1200×800`) — never real images; they pull focus
+- **Ipsum or skeleton copy** — no final copy at this stage
+- **Annotations welcome** — numbered callouts on key decisions
 
-- **Greyscale only.** No brand color. Black, white, and 2–3 grays.
-- **System sans-serif.** No type personality. The user shouldn't form opinions about the font yet.
-- **Boxes for content areas.** A rectangle labeled "headline" or "image" or "feature card."
-- **Striped placeholders for imagery.** Use the diagonal-stripe pattern with a monospace label (`product shot 1200×800`). Never an actual image — that pulls focus.
-- **Lorem ipsum or skeleton copy.** Don't write final copy at this stage. Use ipsum, or short label-style placeholders ("Headline goes here / one short sentence about the value prop").
-- **Annotations are welcome.** Numbered callouts pointing to key decisions are fine — the wireframe is a thinking artifact.
-
-This is the one context where hand-drawn-feeling SVG (rectangles, lines, simple icons) is acceptable — because everything is at the same low fidelity.
+This is the one context where hand-drawn-feeling SVG (rectangles, lines, simple icons) is acceptable — everything is at the same low fidelity.
 
 ## Phase 3: Sketch variations
 
-Produce **at least 3** variations. Each one should differ on the axis you established in Phase 1.
+Produce **at least 3** variations differing on the established axis. Lay single-screen variations side-by-side with the `design_canvas.jsx` starter; build flow variations as small storyboards (3–5 screens each).
 
-For a single screen, lay out the variations side-by-side using the `design_canvas.jsx` starter component. For a multi-screen flow, build each variation as a small storyboard (3–5 screens stacked or arranged horizontally).
+Vary across layout (centered / split-screen / grid), information density, flow structure (single page / multi-step / progressive disclosure), CTA placement, or navigation pattern. Order from most by-the-book to most novel — the user picks something interesting more readily when the safe option sits next to a riskier one.
 
-Vary across:
+Write down each variation's distinguishing structure before sketching it. Left unspecified, variations converge on near-identical layouts — make the differences deliberate, and make at least one genuinely off-distribution.
 
-- **Layout** — centered single-column vs left-aligned vs split-screen vs grid
-- **Information density** — minimal hero vs feature-rich vs feed-style
-- **Flow structure** — single page vs multi-step vs progressive disclosure
-- **Primary CTA placement** — top, bottom, sticky, inline
-- **Navigation pattern** — top nav, side nav, bottom tab, hamburger
+## Phase 4: Annotate
 
-Start with the most by-the-book variation (the obvious one) and end with the most novel (the riskier bet). The user is more likely to pick something interesting if they see the safe option next to a riskier one.
-
-Write down each variation's distinguishing structure before sketching it. Left unspecified, variations converge on near-identical layouts — make the differences deliberate, and make at least one variation genuinely off-distribution.
-
-## Phase 4: Annotate the variations
-
-For each variation, add 2–4 annotation points so the user can see what's interesting about it:
+Add 2–4 annotation points per variation, placed next to it (not in a separate doc), so the user reads the variation and its rationale together:
 
 ```
-- Variation 1 (single-column wizard):
-    → simple, focused, but slow
-- Variation 2 (single-page form):
-    → fastest path, but feels heavy on first impression
-- Variation 3 (progressive disclosure):
-    → balances both, but requires more JS state
+- Variation 1 (single-column wizard): simple, focused, but slow
+- Variation 2 (single-page form): fastest path, heavy first impression
+- Variation 3 (progressive disclosure): balances both, more JS state
 ```
 
-Place annotations next to each variation, not in a separate doc. The user should be able to read the variation and the rationale together.
+## Phase 5: Capture decisions and hand off
 
-## Phase 5: Capture decisions
+After the user picks a direction, capture: the chosen variation (or hybrid), what attracted them to it, what they explicitly rejected, and any new constraints surfaced. This becomes the brief for the hi-fi follow-up.
 
-After the user picks a direction, capture what was decided:
+Then suggest `make-a-prototype` (hi-fi interactive), `make-a-deck` (if the wireframe was for a presentation), or another low-fi round. Don't invest hi-fi polish in the wireframes themselves — they've served their purpose.
 
-- The chosen variation (or hybrid)
-- What attracted them to it
-- What they explicitly rejected from the other options
-- Any new constraints surfaced during the review
-
-This becomes the brief for the hi-fi follow-up.
-
-## Phase 6: Hand off
-
-Wireframes are a stepping stone. When the user has picked a direction, suggest one of:
-
-- **`make-a-prototype`** to take the chosen wireframe to hi-fi interactive
-- **`make-a-deck`** if the wireframe was for a presentation
-- A new round of wireframes if the user wants to iterate further at low fidelity
-
-Do not invest hi-fi polish in the wireframes themselves. They've served their purpose; let them go.
-
-## Phase 7: Summarize
-
-Report:
-
-- Number of variations produced
-- Axis of variation
-- Recommended next step
-- Any open questions the wireframe round surfaced
+Summarize: variations produced, axis of variation, recommended next step, open questions surfaced.
