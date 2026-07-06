@@ -1,110 +1,43 @@
 # Polish Pass: End-of-Design Quality Gate
 
-Run a comprehensive quality check before a design is shown to stakeholders or shipped. **A polished design and an unpolished design are the same idea executed at different levels of care — and the gap is what people actually see.**
-
-This skill is the umbrella for the four narrower review skills. Use it as the final gate before delivery.
+Run a comprehensive quality check before a design is shown to stakeholders or shipped. **A polished and an unpolished design are the same idea executed at different levels of care — and the gap is what people actually see.** This is the umbrella for the four narrower review skills; use it as the final gate before delivery.
 
 ## Phase 1: Confirm scope
 
-Determine what to polish:
+Polish the HTML file the user just finished or asked about; otherwise the project's main deliverable; if unclear, ask. Read it and note the medium (slide / page / mobile / dashboard), the deployment context (internal / customer-facing / marketing), and any stated constraints.
 
-1. The HTML file the user just finished or asked about.
-2. The current main deliverable in the project.
-3. If unclear, ask.
-
-Read the file. Take note of:
-- The medium (slide / page / mobile / dashboard / animation)
-- The deployment context (internal review / customer-facing / marketing)
-- Any user-stated constraints or scope boundaries
-
-If the design is clearly mid-flight (broken layout, missing sections, placeholder content the user is still iterating on), say so and ask whether they really want a polish pass now or after the structure is settled.
+If the design is clearly mid-flight (broken layout, missing sections, placeholder content still being iterated), say so and ask whether to polish now or after the structure settles.
 
 ## Phase 2: Launch four review agents in parallel
 
-Use the ${AGENT_TOOL_NAME} tool to launch all four agents concurrently in a single message. Each agent runs the equivalent of one of the standalone review skills, scoped to this file.
+Use the ${AGENT_TOOL_NAME} tool to launch all four agents concurrently in a single message. Each runs the equivalent of one standalone review skill, scoped to this file.
 
 Instruct every agent explicitly: **report every issue found, including uncertain and low-severity ones, with a confidence and severity estimate for each.** Coverage is the agent's job; filtering and prioritization happen in Phase 3. An agent that self-censors "minor" findings silently lowers recall.
 
-### Agent 1: Accessibility audit
-
-Run the full `accessibility-audit` review:
-- Contrast and color (WCAG AA minimums, color-only signaling, problematic combinations, pure white/black flags)
-- Semantic HTML and structure (headings, button vs div, labels, alt text, ARIA discipline)
-- Keyboard navigation and focus (reachability, tab order, visible focus, skip links)
-- Motion, forms, and miscellany (`prefers-reduced-motion`, flash limits, error specificity, hit-target size)
-
-Report findings as a categorized list.
-
-### Agent 2: AI slop check
-
-Run the full `ai-slop-check` review:
-- Aggressive gradients
-- Emoji-as-decoration
-- Rounded corners with left-border accent (used as default)
-- Hand-drawn SVG illustrations
-- Overused fonts as defaults (Inter, Roboto, Arial, Fraunces, bare system stacks)
-- The editorial-warm house style as a silent default (cream background + serif display + terracotta accent, without a brand reason)
-- Pure white and pure black
-- Random invented colors
-- Random spacing values
-
-Report findings.
-
-### Agent 3: Hierarchy and rhythm review
-
-Run the full `hierarchy-rhythm-review`:
-- **Hierarchy:** primary/secondary/tertiary differentiation, size, color, weight, position, density, 5-second test
-- **Rhythm:** spacing scale discipline, type scale discipline, repetition, strategic variation, color palette discipline, section structure, alignment
-
-Report findings.
-
-### Agent 4: Interaction states pass
-
-Run the full `interaction-states-pass`:
-- Inventory of interactive elements
-- For each: default, hover, active, disabled, focus, loading
-- Transitions (0.15–0.3s for state changes, longer for entry/exit, `prefers-reduced-motion` respected)
-- Feedback for actions (success/error confirmation, state visibility)
-
-Report findings.
+1. **Accessibility audit** (`accessibility-audit`): contrast and color (WCAG AA minimums, color-only signaling, pure white/black); semantic HTML and structure (headings, button vs div, labels, alt text, ARIA discipline); keyboard navigation and focus (reachability, tab order, visible focus); motion, forms, and hit-target size.
+2. **AI slop check** (`ai-slop-check`): aggressive gradients; emoji decoration; default left-border cards; hand-drawn SVG; overused default fonts (Inter, Roboto, Arial, Fraunces, bare system stacks); the editorial-warm house style as a silent default (cream + serif display + terracotta, without a brand reason); pure white/black; invented colors; off-scale spacing.
+3. **Hierarchy and rhythm review** (`hierarchy-rhythm-review`): primary/secondary/tertiary differentiation via size, color, weight, position, density, and the 5-second test; spacing and type scale discipline, repetition, strategic variation, palette discipline, section structure, alignment.
+4. **Interaction states pass** (`interaction-states-pass`): per-element default/hover/active/disabled/focus/loading; transition timing (0.15–0.3s state changes, longer entry/exit); `prefers-reduced-motion`; action feedback and state visibility.
 
 ## Phase 3: Aggregate, deduplicate, prioritize
 
-Wait for all four agents. Aggregate findings into one list.
+Wait for all four agents. Merge duplicate findings (e.g., "focus ring removed" from both accessibility and interaction-states). Group into:
 
-**Deduplicate.** If two agents flagged the same issue (e.g., "focus ring removed" appears in both accessibility and interaction-states), merge into one entry.
+1. **Blockers** — accessibility failures (contrast under WCAG, missing keyboard support, removed focus rings, missing labels). These break the design for real users; fix all.
+2. **Quality issues** — AI slop tropes, broken hierarchy, missing interaction states. These cheapen the design; fix all.
+3. **Polish recommendations** — subtler improvements (color tone shift, spacing-scale tightening). Apply when in scope; flag when out.
 
-**Prioritize.** Group findings into:
+## Phase 4: Fix and re-verify
 
-1. **Blockers** — accessibility failures (contrast under WCAG, missing keyboard support, removed focus rings, missing labels). These break the design for real users; fix all of them.
-2. **Quality issues** — AI slop tropes, broken hierarchy, missing interaction states. These cheapen the design; fix all of them.
-3. **Polish recommendations** — subtler improvements (suggested color tone shift, spacing-scale tightening). Apply when in scope; flag when out of scope.
+Fix every blocker and quality issue directly. For ambiguous fixes (e.g., the design uses Inter but no brand font is stated), pick a defensible default and note it so the user can override. Note and skip clear false positives (e.g., a third-party embed's contrast).
 
-## Phase 4: Fix
+Then re-check the high-risk areas: did contrast fixes wash out a brand color? Do the new focus rings overlap neighboring content? Does the primary CTA now actually feel primary? Fix what looks off; flag what you're unsure about.
 
-Fix every blocker and every quality issue directly. Apply polish recommendations when they don't conflict with the user's stated direction.
+## Phase 5: Final summary
 
-For ambiguous fixes (e.g., "the design uses Inter but the user hasn't given a brand font preference"), pick a defensible default and note the choice in the summary so the user can override.
-
-For findings that are clearly false positives or outside scope (e.g., "the third-party embed has low contrast — but it's a third-party widget"), note them and skip.
-
-## Phase 5: Re-verify
-
-After fixes, do a quick re-check on the high-risk areas:
-- Did the contrast fixes maintain the visual style, or did they wash out a brand color?
-- Did the focus ring additions overlap with neighboring content?
-- Did the hierarchy adjustments make the primary CTA actually feel primary?
-
-If anything looks off, fix it. If you're unsure, flag it for the user's review.
-
-## Phase 6: Final summary
-
-Report concisely:
+Report concisely — the user can ask for detail:
 
 - **Verdict** — "Ready to ship" / "Ready after user reviews flagged decisions" / "Needs more iteration before polish makes sense"
-- **Blockers fixed** — count by category (accessibility / AI slop / hierarchy / interaction)
-- **Polish applied** — count by category
-- **Open decisions** — judgment calls the user should sign off on (font choice, color tone shift, hierarchy emphasis level)
-- **Out of scope** — anything you noticed but didn't touch (e.g., copy edits, content additions, new features)
-
-Keep the summary short. The user can ask for detail if they want it. **Brief summaries — caveats and next steps only.**
+- **Blockers fixed and polish applied** — counts by category
+- **Open decisions** — judgment calls to sign off (font choice, color tone shift, emphasis level)
+- **Out of scope** — noticed but untouched (copy edits, content additions, new features)
