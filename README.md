@@ -6,6 +6,10 @@ A system prompt and skill library that turns an LLM into an opinionated, accessi
 
 Open source, MIT licensed. Drop the prompt into any LLM that supports system prompts (Claude, GPT, Gemini, local models) and pair with the procedural skills as needed.
 
+## Translations
+
+- [简体中文](./translations/zh-CN/README.md)
+
 ## What this is
 
 Most "design assistant" prompts produce generic SaaS-template output — aggressive gradients, emoji decoration, rounded-corner-with-left-border cards, Inter-everywhere typography. This prompt explicitly rejects those patterns and replaces them with a complete design philosophy covering:
